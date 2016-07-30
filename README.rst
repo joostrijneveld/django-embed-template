@@ -17,7 +17,7 @@ Then make sure to add ``django_embed_template`` to your ``INSTALLED_APPS`` in yo
 Usage
 -----
 
-Unlike the ``{% extends %}`` tag, the ``{% embed %}`` tag can be repeated in the template and does not have to occur as the first tag (essentially like the ``{% includes %}`` tag). Likewise, ``{% embed %}`` inherits the context by default, and allows you to pass additional context using the ``with`` keyword. Passing only the explicitly listed variables can be achieved using the ``only`` keyword.
+Unlike ``{% extends %}``, the ``{% embed %}`` tag can be repeated in the template and does not have to occur as the first tag (essentially like the ``{% include %}`` tag). Likewise, ``{% embed %}`` inherits the context by default, and allows you to pass additional context using the ``with`` keyword. Passing only the explicitly listed variables can be achieved using the ``only`` keyword.
 
 *TODO add an example*
 
