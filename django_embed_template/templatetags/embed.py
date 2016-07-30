@@ -23,6 +23,8 @@ class EmbedNode(ExtendsNode):
             context.render_context[BLOCK_CONTEXT_KEY] = BlockContext()
         block_context = context.render_context[BLOCK_CONTEXT_KEY]
 
+        old_blocks = block_context.blocks.copy()
+
         # Add the block nodes from this node to the block context
         block_context.add_blocks(self.blocks)
 
@@ -47,10 +49,14 @@ class EmbedNode(ExtendsNode):
         # This combines IncludeNode.render() and ExtendsNode.render()
         # Call Template._render explicitly so the parser context stays
         # the same.
-        if self.include_node.isolated_context:
-            return compiled_parent._render(context.new(values))
-        with context.push(**values):
-            return compiled_parent._render(context)
+        try:
+            if self.include_node.isolated_context:
+                return compiled_parent._render(context.new(values))
+            with context.push(**values):
+                return compiled_parent._render(context)
+        finally:
+            # We must forget about the just introduced blocks
+            context.render_context[BLOCK_CONTEXT_KEY].blocks = old_blocks
 
 
 @register.tag('embed')
