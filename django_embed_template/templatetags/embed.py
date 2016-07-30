@@ -57,9 +57,18 @@ class EmbedNode(ExtendsNode):
 def do_embed(parser, token):
     include_node = do_include(parser, token)
 
+    # Briefly forget about previously seen blocks, to ignore duplicates
+    try:
+        old_loaded_blocks = parser.__loaded_blocks
+    except AttributeError:  # parser.__loaded_blocks isn't a list yet
+        old_loaded_blocks = []
+    parser.__loaded_blocks = []
+
     nodelist = parser.parse(('endembed',))
     endembed = parser.next_token()
     if endembed.contents != 'endembed':
         parser.invalid_block_tag(endembed, 'endembed', 'endembed')
+
+    parser.__loaded_blocks = old_loaded_blocks
 
     return EmbedNode(nodelist, include_node)
