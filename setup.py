@@ -4,9 +4,10 @@ from setuptools import setup
 
 setup(
     name='django-embed-template',
-    version='0.1.0',
+    version='0.1.1',
     description='Override blocks in included templates',
-    long_description=open('README.rst', encoding='utf-8').read(),
+    long_description="\n".join([open('README.rst').read(),
+                                open('CHANGES.rst').read()]),
     url='https://github.com/joostrijneveld/django-embed-template',
     author='Joost Rijneveld',
     author_email='joost@joostrijneveld.nl',
