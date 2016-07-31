@@ -10,12 +10,17 @@ register = Library()
 
 class EmbedNode(ExtendsNode):
     must_be_first = False
+    context_key = 'embeds_context'
 
     def __init__(self, nodelist, include_node, template_dirs=None):
         super().__init__(nodelist, include_node.template, template_dirs)
         self.include_node = include_node
 
     def render(self, context):
+        old_embeds_context = context.render_context.setdefault(
+            self.context_key, []
+        ).copy()
+
         # The next lines derive from django.template.base.ExtendsNode.render()
         compiled_parent = self.get_parent(context)
 
@@ -57,6 +62,7 @@ class EmbedNode(ExtendsNode):
         finally:
             # We must forget about the just introduced blocks
             context.render_context[BLOCK_CONTEXT_KEY].blocks = old_blocks
+            context.render_context[self.context_key] = old_embeds_context
 
 
 @register.tag('embed')
