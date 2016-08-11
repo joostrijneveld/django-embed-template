@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='django-embed-template',
-    version='0.1.1',
+    version='0.1.2',
     description='Override blocks in included templates',
     long_description="\n".join([open('README.rst').read(),
                                 open('CHANGES.rst').read()]),
@@ -24,6 +24,6 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     keywords='django templates embedding',
-    packages=('django_embed_template',),
+    packages=find_packages(),
     install_requires=['django'],  # TODO pinpoint minimal version required
 )
