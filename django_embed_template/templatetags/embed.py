@@ -1,4 +1,4 @@
-from django.template.library import Library
+from django.template import Library
 from django.template.base import TextNode
 from django.template.loader_tags import (
     BLOCK_CONTEXT_KEY, do_include, ExtendsNode, BlockContext, BlockNode
@@ -17,9 +17,7 @@ class EmbedNode(ExtendsNode):
         self.include_node = include_node
 
     def render(self, context):
-        old_embeds_context = context.render_context.setdefault(
-            self.context_key, []
-        ).copy()
+        old_context = context.render_context.get(self.context_key, []).copy()
 
         # The next lines derive from django.template.base.ExtendsNode.render()
         compiled_parent = self.get_parent(context)
@@ -62,7 +60,7 @@ class EmbedNode(ExtendsNode):
         finally:
             # We must forget about the just introduced blocks
             context.render_context[BLOCK_CONTEXT_KEY].blocks = old_blocks
-            context.render_context[self.context_key] = old_embeds_context
+            context.render_context[self.context_key] = old_context
 
 
 @register.tag('embed')
