@@ -1,0 +1,4 @@
+{% load embed %}
+{% block one %}I{% endblock %}
+{% embed 'included.html' %}{% block 'one' %}one{% endblock %}{% endembed %}
+{% block one %}I{% endblock %}
