@@ -39,7 +39,7 @@ class EmbedNode(Node):
         if isinstance(getattr(parent, 'template', None), Template):
             # parent is a django.template.backends.django.Template
             return parent.template
-        return ExtendsNode.find_template(self, parent, context)
+        return context.template.engine.get_template(parent)
 
     def render(self, context):
         old_embed_context = copy.copy(context.render_context
