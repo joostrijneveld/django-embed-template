@@ -1,23 +1,49 @@
-from django.template import Library
+from django.template import Library, Template
 from django.template.base import TextNode
 from django.template.loader_tags import (
-    BLOCK_CONTEXT_KEY, do_include, ExtendsNode, BlockContext, BlockNode
+    BLOCK_CONTEXT_KEY, do_include, ExtendsNode, BlockContext, BlockNode, Node
 )
 from django.utils import six
+
+import copy
 
 register = Library()
 
 
-class EmbedNode(ExtendsNode):
+class EmbedNode(Node):
     must_be_first = False
     context_key = 'embeds_context'
 
     def __init__(self, nodelist, include_node, template_dirs=None):
-        super().__init__(nodelist, include_node.template, template_dirs)
         self.include_node = include_node
+        self.extends_node = ExtendsNode(nodelist, include_node.template,
+                                        template_dirs)
+
+    @property
+    def parent_name(self):
+        return self.extends_node.parent_name
+
+    # This function derives from django.template.base.ExtendsNode.get_parent()
+    def get_parent(self, context):
+        parent = self.parent_name.resolve(context)
+        if not parent:
+            error_msg = "Invalid template name in 'embeds' tag: %r." % parent
+            if self.parent_name.filters or\
+                    isinstance(self.parent_name.var, Variable):
+                error_msg += " Got this from the '%s' variable." %\
+                    self.parent_name.token
+            raise TemplateSyntaxError(error_msg)
+        if isinstance(parent, Template):
+            # parent is a django.template.Template
+            return parent
+        if isinstance(getattr(parent, 'template', None), Template):
+            # parent is a django.template.backends.django.Template
+            return parent.template
+        return ExtendsNode.find_template(self, parent, context)
 
     def render(self, context):
-        old_context = context.render_context.get(self.context_key, []).copy()
+        old_embed_context = copy.copy(context.render_context
+                                             .get(self.context_key, []))
 
         # The next lines derive from django.template.base.ExtendsNode.render()
         compiled_parent = self.get_parent(context)
@@ -29,7 +55,7 @@ class EmbedNode(ExtendsNode):
         old_blocks = block_context.blocks.copy()
 
         # Add the block nodes from this node to the block context
-        block_context.add_blocks(self.blocks)
+        block_context.add_blocks(self.extends_node.blocks)
 
         # If this block's parent doesn't have an extends node it is the root,
         # and its block nodes also need to be added to the block context.
@@ -60,7 +86,7 @@ class EmbedNode(ExtendsNode):
         finally:
             # We must forget about the just introduced blocks
             context.render_context[BLOCK_CONTEXT_KEY].blocks = old_blocks
-            context.render_context[self.context_key] = old_context
+            context.render_context[self.context_key] = old_embed_context
 
 
 @register.tag('embed')
