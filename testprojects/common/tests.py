@@ -58,9 +58,17 @@ class EmbedTest(TestCase):
     def test_extend_and_embed(self):
         self.assertHTMLEqual(
             render_to_string('extend_and_embed.html'),
-            "included one two\n"
-            "included one 2\n"
-            "includedvar one 2"
+            "extended\n"
+            "(included one two)\n"
+            "2"
+        )
+
+    def test_extend_and_embed_duplicate(self):
+        self.assertHTMLEqual(
+            render_to_string('extend_and_embed_duplicate.html'),
+            "included\n"
+            "(included one two)\n"
+            "2"
         )
 
     def test_nested(self):
