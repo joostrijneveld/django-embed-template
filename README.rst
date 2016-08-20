@@ -1,5 +1,5 @@
 django-embed-template |travis|
-=====================
+==============================
 
 .. |travis| image:: https://travis-ci.org/joostrijneveld/django-embed-template.svg?branch=master
     :target: https://travis-ci.org/joostrijneveld/django-embed-template
