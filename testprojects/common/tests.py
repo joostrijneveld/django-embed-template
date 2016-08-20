@@ -55,6 +55,12 @@ class EmbedTest(TestCase):
                 "'block' tag with name 'one' appears more than once"):
             render_to_string('embed_repeated_interleaved.html'),
 
+    def test_repeated_inside(self):
+        with self.assertRaisesMessage(
+                TemplateSyntaxError,
+                "'block' tag with name 'one' appears more than once"):
+            render_to_string('embed_repeated_inside.html'),
+
     def test_extend_and_embed(self):
         self.assertHTMLEqual(
             render_to_string('extend_and_embed.html'),

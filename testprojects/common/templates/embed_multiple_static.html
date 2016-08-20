@@ -1,4 +1,4 @@
 {% load embed %}
-{% embed 'included.html' %}{% block 'one' %}one{% endblock %} {% block 'two' %}two{% endblock %}{% endembed %}
-{% embed 'included.html' %}{% block 'one' %}one{% endblock %}{% endembed %}
-{% embed 'included.html' with included_var='var' %}{% block 'one' %}one{% endblock %}{% endembed %}
+{% embed 'included.html' %}{% block one %}one{% endblock %} {% block two %}two{% endblock %}{% endembed %}
+{% embed 'included.html' %}{% block one %}one{% endblock %}{% endembed %}
+{% embed 'included.html' with included_var='var' %}{% block one %}one{% endblock %}{% endembed %}

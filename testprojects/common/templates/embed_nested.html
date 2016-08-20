@@ -1,10 +1,10 @@
 {% load embed %}
 {% embed 'included.html' %}
-    {% block 'one' %}
+    {% block one %}
         {% embed 'included.html' %}
-            {% block 'one' %}I{% endblock %}
-            {% block 'two' %}II{% endblock %}
+            {% block one %}I{% endblock %}
+            {% block two %}II{% endblock %}
         {% endembed %}
     {% endblock %}
-    {% block 'two' %}two{% endblock %}
+    {% block two %}two{% endblock %}
 {% endembed %}

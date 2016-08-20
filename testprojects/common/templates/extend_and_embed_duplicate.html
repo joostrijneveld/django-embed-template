@@ -1,8 +1,8 @@
 {% extends 'included.html' %}
 {% load embed %}
-{% block 'one' %}
+{% block one %}
     ({% embed 'included.html' %}
-        {% block 'one' %}one{% endblock %}
-        {% block 'two' %}two{% endblock %}
+        {% block one %}one{% endblock %}
+        {% block two %}two{% endblock %}
     {% endembed %})
 {% endblock %}
