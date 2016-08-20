@@ -4,7 +4,12 @@ django-embed-template |travis|
 .. |travis| image:: https://travis-ci.org/joostrijneveld/django-embed-template.svg?branch=master
     :target: https://travis-ci.org/joostrijneveld/django-embed-template
 
-This package adds the ``{% embed %}`` templatetag. This tag combines the functionality of `the include tag <https://docs.djangoproject.com/en/1.9/ref/templates/builtins/#include>`__ and `the extends tag <https://docs.djangoproject.com/en/1.9/ref/templates/builtins/#extends>`__ to allow for more flexible and extensible modular template usage. Inspired by `twig's embed tag <http://twig.sensiolabs.org/doc/tags/embed.html>`__, this tag lets you override blocks that were defined in the included template.
+This package adds the ``{% embed %}`` templatetag. This tag combines the functionality of `the include tag <https://docs.djangoproject.com/en/1.10/ref/templates/builtins/#include>`__ and `the extends tag <https://docs.djangoproject.com/en/1.10/ref/templates/builtins/#extends>`__ to allow for more flexible and extensible modular template usage. Inspired by `twig's embed tag <http://twig.sensiolabs.org/doc/tags/embed.html>`__, this tag lets you override blocks that were defined in the included template.
+
+Requirements
+------------
+
+This package is tested with Django 1.8, 1.9 and 1.10 and their respectively supported Python versions.
 
 Installation
 ------------
