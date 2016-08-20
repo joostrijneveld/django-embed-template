@@ -81,6 +81,14 @@ class EmbedTest(TestCase):
         self.assertHTMLEqual(
             render_to_string('embed_nested.html'),
             "included\n"
-            "included I II\n"
+            "(included I II)\n"
             "two"
+        )
+
+    def test_nested_multifile(self):
+        self.assertHTMLEqual(
+            render_to_string('embed_nested_multifile.html'),
+            "included\n"
+            "( included one two )\n"
+            "2"
         )
