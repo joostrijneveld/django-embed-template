@@ -9,7 +9,7 @@ This package adds the ``{% embed %}`` templatetag. This tag combines the functio
 Requirements
 ------------
 
-This package is tested with Django 1.8, 1.9 and 1.10 and their respectively supported Python versions.
+This package is tested with Django 1.8 up to 2.0, and their respectively supported Python versions.
 
 Installation
 ------------
