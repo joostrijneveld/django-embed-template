@@ -1,0 +1,6 @@
+{% load embed %}
+{% embed 'included.html' %}
+    {% block one %}
+        ({% include 'embed_full.html' %})
+    {% endblock %}
+{% endembed %}
