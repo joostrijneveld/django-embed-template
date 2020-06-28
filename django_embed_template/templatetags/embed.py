@@ -4,7 +4,8 @@ from django.template import (
 from django.template.loader_tags import (
     BLOCK_CONTEXT_KEY, BlockContext, BlockNode, do_include
 )
-from django.utils import six
+
+import six
 
 register = Library()
 
